@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  margin-bottom: 0.9rem;
+}
+
+.user {
+  justify-content: flex-end;
+}
+
+.assistant {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  border: 1px solid #e3d9cf;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.user .bubble {
+  background: #e8ddff;
+}
+
+.assistant .bubble {
+  background: #efe7dc;
+}
+
+.text {
+  margin: 0 0 0.4rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.meta {
+  font-size: 0.75rem;
+  color: #6f675f;
+}
