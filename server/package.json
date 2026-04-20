@@ -2,14 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
-},
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google/genai": "^1.50.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "ws": "^8.20.0"

@@ -42,8 +42,13 @@ export const createSocketConnection = ({
 };
 
 export const sendSocketMessage = (message: ClientEvent) => {
-  if (!socket || socket.readyState !== WebSocket.OPEN) return;
+  if (!socket || socket.readyState !== WebSocket.OPEN) return false;
   socket.send(JSON.stringify(message));
+  return true;
+};
+
+export const isSocketOpen = () => {
+  return socket?.readyState === WebSocket.OPEN;
 };
 
 export const closeSocketConnection = () => {

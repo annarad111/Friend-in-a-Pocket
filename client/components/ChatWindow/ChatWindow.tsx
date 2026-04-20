@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import { ChatMessage } from '@/types/chat';
 import { MessageBubble } from '@/components/MessageBuble/MessageBuble';
 import styles from './ChatWindow.module.scss';
@@ -8,6 +11,12 @@ type Props = {
 };
 
 export const ChatWindow = ({ messages, isTyping }: Props) => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isTyping]);
+
   return (
     <div className={styles.container}>
       {messages.length === 0 && (
@@ -31,6 +40,8 @@ export const ChatWindow = ({ messages, isTyping }: Props) => {
           <span />
         </div>
       )}
+
+      <div ref={bottomRef} />
     </div>
   );
 };

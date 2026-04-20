@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
 import { ChatWindow } from '@/components/ChatWindow/ChatWindow';
 import { ChatInput } from '@/components/ChatInput/ChatInput';
 import { ConnectionBadge } from '@/components/ConnectionBadge/ConnectionBadge';
-import { createSocketConnection, closeSocketConnection, sendSocketMessage } from '@/lib/socket';
+import { useChatSocket } from '@/hooks/useChatSocket';
 import { useChatStore } from '@/store/useChatStore';
-import { ServerEvent } from '@/types/chat';
 import styles from './page.module.scss';
 
 export default function HomePage() {
+  const { sendMessage } = useChatSocket();
+
   const {
     messages,
     input,
@@ -18,46 +18,9 @@ export default function HomePage() {
     errorMessage,
     setInput,
     addMessage,
-    setSocketStatus,
-    setTyping,
     setErrorMessage,
+    resetChat,
   } = useChatStore();
-
-  useEffect(() => {
-    setSocketStatus('connecting');
-
-    createSocketConnection({
-      onOpen: () => {
-        setSocketStatus('connected');
-        setErrorMessage(null);
-        sendSocketMessage({ type: 'session:start' });
-      },
-      onClose: () => {
-        setSocketStatus('disconnected');
-      },
-      onError: () => {
-        setSocketStatus('error');
-        setErrorMessage('Could not connect to the assistant.');
-      },
-      onMessage: (data: ServerEvent) => {
-        if (data.type === 'chat:message') {
-          addMessage(data.payload);
-        }
-
-        if (data.type === 'chat:typing') {
-          setTyping(data.payload.value);
-        }
-
-        if (data.type === 'system:error') {
-          setErrorMessage(data.payload.message);
-        }
-      },
-    });
-
-    return () => {
-      closeSocketConnection();
-    };
-  }, [addMessage, setErrorMessage, setSocketStatus, setTyping]);
 
   const handleSend = () => {
     const text = input.trim();
@@ -70,12 +33,22 @@ export default function HomePage() {
       createdAt: new Date().toISOString(),
     });
 
-    sendSocketMessage({
+    const sent = sendMessage({
       type: 'chat:send',
       payload: { text },
     });
 
+    if (!sent) {
+      setErrorMessage('Message could not be sent. Please check the connection.');
+      return;
+    }
+
     setInput('');
+    setErrorMessage(null);
+  };
+
+  const handleReset = () => {
+    resetChat();
   };
 
   return (
@@ -90,7 +63,12 @@ export default function HomePage() {
             </p>
           </div>
 
-          <ConnectionBadge status={socketStatus} />
+          <div className={styles.headerActions}>
+            <ConnectionBadge status={socketStatus} />
+            <button className={styles.resetButton} onClick={handleReset}>
+              Reset chat
+            </button>
+          </div>
         </div>
 
         <div className={styles.notice}>
