@@ -7,6 +7,8 @@ import { useChatSocket } from '@/hooks/useChatSocket';
 import { useChatStore } from '@/store/useChatStore';
 import styles from './page.module.scss';
 
+const MAX_HISTORY_MESSAGES = 8;
+
 export default function HomePage() {
   const { sendMessage } = useChatSocket();
 
@@ -26,16 +28,23 @@ export default function HomePage() {
     const text = input.trim();
     if (!text || socketStatus !== 'connected') return;
 
-    addMessage({
+    const userMessage = {
       id: crypto.randomUUID(),
-      sender: 'user',
+      sender: 'user' as const,
       text,
       createdAt: new Date().toISOString(),
-    });
+    };
+
+    addMessage(userMessage);
+
+    const recentHistory = [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES);
 
     const sent = sendMessage({
       type: 'chat:send',
-      payload: { text },
+      payload: {
+        text,
+        history: recentHistory,
+      },
     });
 
     if (!sent) {

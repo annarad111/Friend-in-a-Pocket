@@ -12,7 +12,6 @@
 }
 
 .bubble {
-  max-width: 78%;
   padding: 0.9rem 1rem;
   border-radius: 18px;
   border: 1px solid #e3d9cf;
@@ -20,11 +19,11 @@
 }
 
 .user .bubble {
-  background: #e8ddff;
+  background: #ffeb3b69;
 }
 
 .assistant .bubble {
-  background: #efe7dc;
+  background: #9468e161;
 }
 
 .text {

@@ -1,10 +1,7 @@
 import 'dotenv/config';
 import { WebSocketServer, WebSocket } from 'ws';
 import { generateAssistantReply } from './ai/generateReply';
-
-type IncomingEvent =
-  | { type: 'session:start' }
-  | { type: 'chat:send'; payload: { text: string } };
+import { IncomingEvent } from './types/chat';
 
 type OutgoingMessage = {
   type: 'chat:message';
@@ -43,6 +40,7 @@ wss.on('connection', (ws: WebSocket) => {
 
       if (event.type === 'chat:send') {
         const text = event.payload?.text?.trim();
+        const history = event.payload?.history || [];
 
         if (!text) {
           sendError(ws, 'Message cannot be empty.');
@@ -52,7 +50,7 @@ wss.on('connection', (ws: WebSocket) => {
         sendTyping(ws, true);
 
         try {
-          const response = await generateAssistantReply(text);
+          const response = await generateAssistantReply(text, history);
 
           sendTyping(ws, false);
 

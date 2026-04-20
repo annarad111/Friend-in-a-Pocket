@@ -16,7 +16,13 @@ export type ChatMessage = {
 
 export type ClientEvent =
   | { type: 'session:start' }
-  | { type: 'chat:send'; payload: { text: string } };
+  | {
+      type: 'chat:send';
+      payload: {
+        text: string;
+        history: ChatMessage[];
+      };
+    };
 
 export type ServerEvent =
   | { type: 'chat:message'; payload: ChatMessage }

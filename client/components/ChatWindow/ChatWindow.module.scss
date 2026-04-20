@@ -1,7 +1,5 @@
 .container {
-  min-height: 420px;
-  max-height: 60vh;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 1.2rem;
   background: #fffaf4;
   border: 1px solid #e3d9cf;
