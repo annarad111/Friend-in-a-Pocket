@@ -15,7 +15,8 @@ export const createSocketConnection = ({
   onError,
   onMessage,
 }: SocketHandlers) => {
-  socket = new WebSocket('ws://localhost:8080');
+  const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080';
+  socket = new WebSocket(WS_URL);
 
   socket.onopen = () => {
     onOpen();
