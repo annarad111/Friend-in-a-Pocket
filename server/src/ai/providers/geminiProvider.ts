@@ -1,11 +1,12 @@
 import { GoogleGenAI } from '@google/genai';
-import { SYSTEM_PROMPT } from '../systemPrompt';
 import { sanitizeInput } from '../../utils/sanitizeInput';
 import { AIProvider } from '../types';
 import { ChatMessage } from '../../types/chat';
 import { formatConversation } from '../formatConversation';
 import { detectCategory } from '../detectCategory';
 import { retryWithBackoff } from '../retrywithBackoff';
+import { StoredOnboardingProfile } from '../../types/shared';
+import { buildSystemPrompt } from '../buildSystemPrompt';
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
@@ -33,26 +34,25 @@ Use the preferred response structure and keep the answer emotionally intelligent
 `;
 }
 
-async function generateWithModel(model: string, prompt: string) {
+async function generateWithModel(
+  model: string,
+  prompt: string,
+  profile: StoredOnboardingProfile | null
+) {
   const response = await ai.models.generateContent({
     model,
     contents: prompt,
     config: {
-      systemInstruction: SYSTEM_PROMPT,
+      systemInstruction: buildSystemPrompt(profile),
       temperature: 0.7,
-      maxOutputTokens: 1200,
+      maxOutputTokens: 700,
     },
   });
-
-  console.log('GEMINI RAW RESPONSE:', JSON.stringify(response, null, 2));
 
   const text = response.text?.trim();
 
   if (!text) {
     throw new Error('Gemini returned empty text');
-  }
-  if (!/[.!?]$/.test(text)) {
-    console.warn('Gemini response may be incomplete:', text);
   }
 
   return text;
@@ -72,7 +72,11 @@ function getErrorStatus(error: unknown): number | undefined {
 }
 
 export const geminiProvider: AIProvider = {
-  async generateReply(userInput: string, history: ChatMessage[] = []) {
+  async generateReply(
+    userInput: string,
+    history: ChatMessage[] = [],
+    profile: StoredOnboardingProfile | null = null
+  ) {
     const cleanedInput = sanitizeInput(userInput);
 
     if (!cleanedInput) {
@@ -83,7 +87,7 @@ export const geminiProvider: AIProvider = {
 
     try {
       return await retryWithBackoff(
-        () => generateWithModel(PRIMARY_MODEL, prompt),
+        () => generateWithModel(PRIMARY_MODEL, prompt, profile),
         {
           maxAttempts: 4,
           initialDelayMs: 1000,
@@ -99,7 +103,7 @@ export const geminiProvider: AIProvider = {
         );
 
         return await retryWithBackoff(
-          () => generateWithModel(FALLBACK_MODEL, prompt),
+          () => generateWithModel(FALLBACK_MODEL, prompt, profile),
           {
             maxAttempts: 3,
             initialDelayMs: 1200,

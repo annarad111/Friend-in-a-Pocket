@@ -1,3 +1,5 @@
+import { StoredOnboardingProfile } from './shared';
+
 export type Sender = 'user' | 'assistant' | 'system';
 
 export type ChatMessage = {
@@ -14,5 +16,6 @@ export type IncomingEvent =
       payload: {
         text: string;
         history: ChatMessage[];
+        profile: StoredOnboardingProfile | null;
       };
     };

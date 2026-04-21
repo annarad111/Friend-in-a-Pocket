@@ -2,7 +2,9 @@ import 'dotenv/config';
 import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { generateAssistantReply } from './ai/generateReply';
+import { generateOnboardingProfile } from './ai/generateOnboardingProfile';
 import { IncomingEvent } from './types/chat';
+import { OnboardingRequest } from './types/onboarding';
 
 type OutgoingMessage = {
   type: 'chat:message';
@@ -30,14 +32,86 @@ type OutgoingError = {
 
 const port = Number(process.env.PORT || 8080);
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 const server = http.createServer((req, res) => {
-  if (req.url === '/health') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, corsHeaders);
+    res.end();
+    return;
+  }
+
+  if (req.method === 'GET' && req.url === '/health') {
+    res.writeHead(200, {
+      ...corsHeaders,
+      'Content-Type': 'application/json',
+    });
     res.end(JSON.stringify({ ok: true }));
     return;
   }
 
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  if (req.method === 'POST' && req.url === '/api/onboarding-profile') {
+    let body = '';
+
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on('end', async () => {
+      try {
+        const parsed = JSON.parse(body) as OnboardingRequest;
+
+        if (
+          !parsed.friendName?.trim() ||
+          !parsed.favoriteAnimal?.trim() ||
+          !parsed.favoriteColor?.trim() ||
+          !parsed.favoriteInstrument?.trim()
+        ) {
+          res.writeHead(400, {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          });
+          res.end(
+            JSON.stringify({
+              message: 'All onboarding fields are required.',
+            })
+          );
+          return;
+        }
+
+        const generatedProfile = await generateOnboardingProfile(parsed);
+
+        res.writeHead(200, {
+          ...corsHeaders,
+          'Content-Type': 'application/json',
+        });
+        res.end(JSON.stringify(generatedProfile));
+      } catch (error) {
+        console.error('Onboarding generation error:', error);
+
+        res.writeHead(500, {
+          ...corsHeaders,
+          'Content-Type': 'application/json',
+        });
+        res.end(
+          JSON.stringify({
+            message: 'Could not generate onboarding profile.',
+          })
+        );
+      }
+    });
+
+    return;
+  }
+
+  res.writeHead(200, {
+    ...corsHeaders,
+    'Content-Type': 'text/plain',
+  });
   res.end('Friend in a Pocket backend is running.');
 });
 
@@ -55,6 +129,7 @@ wss.on('connection', (ws: WebSocket) => {
       if (event.type === 'chat:send') {
         const text = event.payload?.text?.trim();
         const history = event.payload?.history || [];
+        const profile = event.payload?.profile || null;
 
         if (!text) {
           sendError(ws, 'Message cannot be empty.');
@@ -64,7 +139,7 @@ wss.on('connection', (ws: WebSocket) => {
         sendTyping(ws, true);
 
         try {
-          const response = await generateAssistantReply(text, history);
+          const response = await generateAssistantReply(text, history, profile);
 
           sendTyping(ws, false);
 
