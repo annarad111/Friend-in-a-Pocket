@@ -1,0 +1,131 @@
+.page {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(rgba(10, 10, 30, 0.6), rgba(10, 10, 30, 0.8)),
+    url("/images/background.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.card {
+  width: 100%;
+  max-width: 920px;
+  background: #fffaf48a;
+  backdrop-filter: blur(10px);
+  border-radius: 28px;
+  padding: 1.4rem;
+  box-shadow: 0 20px 60px rgba(66, 42, 14, 0.08);
+  max-height: 95vh;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.card::-webkit-scrollbar {
+  display: none;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0 0 0.3rem;
+    font-size: 2rem;
+    font-family: "Playwrite NO", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  p {
+    margin: 0;
+    color: #3f3c3a;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+}
+
+.headerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: flex-end;
+}
+
+.resetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(180, 180, 180, 0.25);
+
+  backdrop-filter: blur(10px);
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.resetButton:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.resetIcon {
+  color: #6d6259;
+  transition: transform 0.4s ease;
+}
+
+.resetButton:hover .resetIcon {
+  transform: rotate(-120deg);
+}
+
+.resetButton:hover {
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.12),
+    0 0 12px rgba(168, 139, 250, 0.25);
+}
+
+.notice {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  background: #f5efe6;
+  color: #5f584f;
+  border: 1px solid #e3d9cf;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.error {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  background: #fdeaea;
+  color: #a12b2b;
+  border: 1px solid #efc0c0;
+}
+
+.inputArea {
+  margin-top: 1rem;
+}

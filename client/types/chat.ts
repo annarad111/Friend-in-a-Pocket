@@ -1,3 +1,5 @@
+import { StoredOnboardingProfile } from '@/types/onboarding';
+
 export type Sender = 'user' | 'assistant' | 'system';
 
 export type SocketStatus =
@@ -21,6 +23,7 @@ export type ClientEvent =
       payload: {
         text: string;
         history: ChatMessage[];
+        profile: StoredOnboardingProfile | null;
       };
     };
 

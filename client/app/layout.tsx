@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { DreamyBackground } from '@/components/DreamyBackground/DreamyBackground';
 
 export const metadata: Metadata = {
   title: 'Friend in a Pocket',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <DreamyBackground />
+        {children}
+      </body>
     </html>
   );
 }

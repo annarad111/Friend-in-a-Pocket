@@ -1,0 +1,90 @@
+.wrapper {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  border-radius: 30px;
+  background: rgba(255, 250, 244, 0.72);
+  border: 1px solid rgba(227, 217, 207, 0.5);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 20px 60px rgba(28, 17, 58, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    max-height: 80vh;
+    overflow: scroll;
+}
+
+.header {
+  margin-bottom: 1.4rem;
+
+  h1 {
+    margin: 0 0 0.4rem;
+    font-size: 2rem;
+    color: #2d243f;
+  }
+
+  p {
+    margin: 0;
+    color: #61576e;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.block {
+  padding: 1.1rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(213, 201, 230, 0.4);
+  box-shadow: 0 8px 18px rgba(50, 32, 90, 0.06);
+
+  h3 {
+    margin: 0 0 0.5rem;
+    color: #40374b;
+  }
+
+  p {
+    margin: 0;
+    color: #5b5168;
+    line-height: 1.7;
+  }
+}
+
+.lastItem {
+  grid-column: span 2;
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+.enterButton {
+  margin-top: 1.4rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #9d7cff 0%, #c08fff 100%);
+  box-shadow: 0 12px 24px rgba(137, 102, 241, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.enterButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(137, 102, 241, 0.32);
+}

@@ -1,34 +1,76 @@
 .badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding: 0.4rem 0.8rem;
+  gap: 6px;
+
+  padding: 6px 12px;
   border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
 }
+
 
 .connected {
-  background: #e8f7ee;
-  color: #1f7a46;
-  border-color: #b9e3c7;
+  background: rgba(200, 180, 255, 0.15);
+  border: 1px solid rgba(200, 180, 255, 0.3);
+  color: #a78bfa;
+
+  box-shadow: 0 0 10px rgba(200, 180, 255, 0.2);
 }
 
+
+.sparkles {
+  animation: sparklePulse 2s ease-in-out infinite;
+}
+
+@keyframes sparklePulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0.4));
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0.4));
+  }
+}
+
+
 .connecting {
-  background: #fff6df;
-  color: #9a6b00;
-  border-color: #f0d58b;
+  background: rgba(255, 230, 180, 0.15);
+  border: 1px solid rgba(255, 230, 180, 0.3);
+  color: #f59e0b;
+}
+
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .disconnected,
 .error {
-  background: #fdeaea;
-  color: #a12b2b;
-  border-color: #efc0c0;
+  background: rgba(255, 150, 150, 0.15);
+  border: 1px solid rgba(255, 150, 150, 0.3);
+  color: #ef4444;
 }
 
 .idle {
-  background: #f0f0f0;
-  color: #666;
-  border-color: #ddd;
+  background: rgba(200, 200, 200, 0.15);
+  border: 1px solid rgba(200, 200, 200, 0.3);
+  color: #888;
 }
