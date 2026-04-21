@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { generateAssistantReply } from './ai/generateReply';
 import { IncomingEvent } from './types/chat';
@@ -27,7 +28,20 @@ type OutgoingError = {
   };
 };
 
-const wss = new WebSocketServer({ port: 8080 });
+const port = Number(process.env.PORT || 8080);
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ ok: true }));
+    return;
+  }
+
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Friend in a Pocket backend is running.');
+});
+
+const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws: WebSocket) => {
   ws.on('message', async (raw) => {
@@ -65,18 +79,16 @@ wss.on('connection', (ws: WebSocket) => {
           });
         } catch (error) {
           console.error('Gemini generation error:', error);
-
           sendTyping(ws, false);
-          sendError(ws, 'The assistant is temporarily unavailable. Please try again.');
+          sendError(
+            ws,
+            'The assistant is experiencing high demand right now. Please try again in a moment.'
+          );
         }
       }
     } catch {
       sendError(ws, 'Invalid message format.');
     }
-  });
-
-  ws.on('close', () => {
-    console.log('Client disconnected');
   });
 });
 
@@ -100,4 +112,6 @@ function sendError(ws: WebSocket, message: string) {
   ws.send(JSON.stringify(payload));
 }
 
-console.log('WebSocket server running on ws://localhost:8080');
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});

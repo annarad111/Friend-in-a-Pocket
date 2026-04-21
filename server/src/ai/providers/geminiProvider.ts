@@ -40,11 +40,22 @@ async function generateWithModel(model: string, prompt: string) {
     config: {
       systemInstruction: SYSTEM_PROMPT,
       temperature: 0.7,
-      maxOutputTokens: 700,
+      maxOutputTokens: 1200,
     },
   });
 
-  return response.text?.trim() || 'I’m sorry, I could not generate a response right now.';
+  console.log('GEMINI RAW RESPONSE:', JSON.stringify(response, null, 2));
+
+  const text = response.text?.trim();
+
+  if (!text) {
+    throw new Error('Gemini returned empty text');
+  }
+  if (!/[.!?]$/.test(text)) {
+    console.warn('Gemini response may be incomplete:', text);
+  }
+
+  return text;
 }
 
 function getErrorStatus(error: unknown): number | undefined {
