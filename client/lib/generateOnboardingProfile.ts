@@ -1,6 +1,9 @@
 import { GeneratedOnboardingProfile, UserOnboardingProfile } from '@/types/onboarding';
 
-const API_BASE_URL ='http://localhost:8080';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'https://friend-in-a-pocket.onrender.com';
+
+console.log('API_BASE_URL:', API_BASE_URL);
 
 export async function generateOnboardingProfile(
   profile: UserOnboardingProfile
