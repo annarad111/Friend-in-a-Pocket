@@ -1,11 +1,9 @@
-import { geminiProvider } from './providers/geminiProvider';
-import { ChatMessage } from '../types/chat';
-import { StoredOnboardingProfile } from '../types/shared';
+import { generateReplyWithOpenRouter } from './providers/openRouterProvider';
 
 export async function generateAssistantReply(
   userInput: string,
-  history: ChatMessage[] = [],
-  profile: StoredOnboardingProfile | null = null
+  history: any[] = [],
+  profile: any = null
 ) {
-  return geminiProvider.generateReply(userInput, history, profile);
+  return generateReplyWithOpenRouter(userInput, history, profile);
 }

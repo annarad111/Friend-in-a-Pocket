@@ -1,49 +1,74 @@
-import { GoogleGenAI } from '@google/genai';
-import { ONBOARDING_PROFILE_PROMPT } from './onboardingPrompt';
-import { OnboardingRequest, GeneratedOnboardingProfile } from '../types/onboarding';
+import { ONBOARDING_PROFILE_PROMPT } from "./onboardingPrompt";
+import {
+  OnboardingRequest,
+  GeneratedOnboardingProfile,
+} from "../types/onboarding";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const MODEL = 'gemini-2.5-flash-lite';
+const MODEL = "anthropic/claude-3-haiku";
 
 function extractJson(text: string) {
-  const start = text.indexOf('{');
-  const end = text.lastIndexOf('}');
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
 
   if (start === -1 || end === -1 || end <= start) {
-    throw new Error('No valid JSON object found in model response.');
+    throw new Error("No valid JSON object found in model response.");
   }
 
   return text.slice(start, end + 1);
 }
 
 export async function generateOnboardingProfile(
-  input: OnboardingRequest
+  input: OnboardingRequest,
 ): Promise<GeneratedOnboardingProfile> {
-  const prompt = `
+  const userPrompt = `
 Friend name: ${input.friendName}
 Favorite animal: ${input.favoriteAnimal}
 Favorite color: ${input.favoriteColor}
 Favorite musical instrument: ${input.favoriteInstrument}
 `;
 
-  const response = await ai.models.generateContent({
-    model: MODEL,
-    contents: prompt,
-    config: {
-      systemInstruction: ONBOARDING_PROFILE_PROMPT,
-      temperature: 0.8,
-      maxOutputTokens: 800,
+  const response = await fetch(
+    "https://openrouter.ai/api/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "Friend in a Pocket",
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          {
+            role: "system",
+            content: ONBOARDING_PROFILE_PROMPT,
+          },
+          {
+            role: "user",
+            content: userPrompt,
+          },
+        ],
+        temperature: 0.8,
+      }),
     },
-  });
+  );
 
-  const rawText = response.text?.trim();
-  console.log(rawText);
+  if (!response.ok) {
+    const text = await response.text();
+    console.error("OpenRouter onboarding error:", text);
+    throw new Error("Onboarding generation failed");
+  }
+
+  const data = await response.json();
+
+  const rawText = data.choices?.[0]?.message?.content?.trim();
+  console.log("RAW AI RESPONSE:", rawText);
 
   if (!rawText) {
-    throw new Error('Empty onboarding profile response from model.');
+    throw new Error("Empty onboarding profile response.");
   }
 
   const jsonText = extractJson(rawText);
