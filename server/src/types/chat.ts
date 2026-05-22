@@ -9,6 +9,12 @@ export type ChatMessage = {
   createdAt: string;
 };
 
+export type BirthChartPayload = {
+  sunSign: string;
+  moonSign?: string;
+  ascendant?: string;
+};
+
 export type IncomingEvent =
   | { type: 'session:start' }
   | {
@@ -17,5 +23,6 @@ export type IncomingEvent =
         text: string;
         history: ChatMessage[];
         profile: StoredOnboardingProfile | null;
+        birthChart?: BirthChartPayload | null;
       };
     };

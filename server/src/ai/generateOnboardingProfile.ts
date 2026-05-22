@@ -1,4 +1,5 @@
 import { ONBOARDING_PROFILE_PROMPT } from "./onboardingPrompt";
+import { fixJsonControlChars } from "./fixJson";
 import {
   OnboardingRequest,
   GeneratedOnboardingProfile,
@@ -16,7 +17,7 @@ function extractJson(text: string) {
     throw new Error("No valid JSON object found in model response.");
   }
 
-  return text.slice(start, end + 1);
+  return fixJsonControlChars(text.slice(start, end + 1));
 }
 
 export async function generateOnboardingProfile(
@@ -58,8 +59,8 @@ Favorite musical instrument: ${input.favoriteInstrument}
 
   if (!response.ok) {
     const text = await response.text();
-    console.error("OpenRouter onboarding error:", text);
-    throw new Error("Onboarding generation failed");
+    console.error(`OpenRouter onboarding error [${response.status}]:`, text);
+    throw new Error(`OpenRouter ${response.status}: ${text.slice(0, 200)}`);
   }
 
   const data = await response.json();

@@ -13,8 +13,10 @@
   "description": "",
   "dependencies": {
     "@google/genai": "^1.50.1",
+    "astronomy-engine": "^2.1.19",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
+    "geo-tz": "^8.1.7",
     "ws": "^8.20.0"
   },
   "devDependencies": {

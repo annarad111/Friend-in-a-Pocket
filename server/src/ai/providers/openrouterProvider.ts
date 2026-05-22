@@ -1,17 +1,19 @@
 import { ChatMessage } from '../../types/chat';
 import { StoredOnboardingProfile } from '../../types/shared';
 import { buildSystemPrompt } from '../buildSystemPrompt';
+import type { BirthChartPayload } from '../../types/chat';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const MODEL = "anthropic/claude-3-haiku";
+const MODEL = 'anthropic/claude-3-haiku';
 
 function formatMessages(
   userInput: string,
   history: ChatMessage[],
-  profile: StoredOnboardingProfile | null
+  profile: StoredOnboardingProfile | null,
+  birthChart: BirthChartPayload | null,
 ) {
-  const systemPrompt = buildSystemPrompt(profile);
+  const systemPrompt = buildSystemPrompt(profile, birthChart);
 
   return [
     {
@@ -32,7 +34,8 @@ function formatMessages(
 export async function generateReplyWithOpenRouter(
   userInput: string,
   history: ChatMessage[] = [],
-  profile: StoredOnboardingProfile | null = null
+  profile: StoredOnboardingProfile | null = null,
+  birthChart: BirthChartPayload | null = null,
 ): Promise<string> {
   const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
@@ -44,7 +47,7 @@ export async function generateReplyWithOpenRouter(
     },
     body: JSON.stringify({
       model: MODEL,
-      messages: formatMessages(userInput, history, profile),
+      messages: formatMessages(userInput, history, profile, birthChart),
       temperature: 0.7,
     }),
   });
