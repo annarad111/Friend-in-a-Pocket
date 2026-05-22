@@ -55,6 +55,7 @@ export const useOnboardingStore = create<OnboardingStore>((set, get) => ({
     const finalProfile: StoredOnboardingProfile = {
       ...pendingProfile,
       generatedProfile,
+      lockedAt: new Date().toISOString(),
     };
 
     const payload = {

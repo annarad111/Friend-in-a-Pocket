@@ -1,0 +1,598 @@
+.stage {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 24px 80px;
+  overflow: scroll;
+  font-family: "Montserrat", sans-serif;
+  color: #f5f0ff;
+  height: 100vh;
+}
+
+// ─── backdrop ────────────────────────────────────────────────────
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(80, 40, 160, 0.35),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 80%,
+      rgba(40, 20, 100, 0.3),
+      transparent 50%
+    ),
+    linear-gradient(180deg, #0e0826 0%, #160e38 50%, #0a0620 100%);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(
+      1.5px 1.5px at 60px 40px,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    ),
+    radial-gradient(
+      1px 1px at 180px 100px,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    ),
+    radial-gradient(
+      1.8px 1.8px at 320px 60px,
+      rgba(200, 180, 255, 0.7),
+      transparent
+    ),
+    radial-gradient(
+      1px 1px at 460px 140px,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    ),
+    radial-gradient(
+      1.4px 1.4px at 80px 200px,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    ),
+    radial-gradient(
+      1.2px 1.2px at 240px 220px,
+      rgba(200, 220, 255, 0.55),
+      transparent
+    );
+  background-size: 500px 280px;
+  animation: drift 120s linear infinite;
+}
+
+@keyframes drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 500px 280px;
+  }
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+}
+.glowA {
+  width: 500px;
+  height: 500px;
+  background: rgba(100, 60, 220, 0.4);
+  top: -10%;
+  left: -10%;
+}
+.glowB {
+  width: 400px;
+  height: 400px;
+  background: rgba(180, 100, 255, 0.25);
+  bottom: 10%;
+  right: -5%;
+}
+
+// ─── layout ──────────────────────────────────────────────────────
+.layout {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.backLink {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.15s;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.pageTitle {
+  text-align: center;
+
+  h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.4rem;
+    font-family: "Playwrite NO", "Caveat", cursive;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.topSpacer {
+  width: 72px;
+}
+
+// ─── portrait card ────────────────────────────────────────────────
+.portraitCard {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 1.8rem;
+  overflow: auto;
+  height: 500px;
+}
+
+.portraitHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.sectionLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(192, 143, 255, 0.75);
+}
+
+.regenerateBtn {
+  background: none;
+  border: 1px solid rgba(192, 143, 255, 0.3);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.78rem;
+  color: rgba(192, 143, 255, 0.75);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(192, 143, 255, 0.1);
+    border-color: rgba(192, 143, 255, 0.55);
+    color: rgba(192, 143, 255, 1);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.portraitText {
+  font-size: 0.92rem;
+  color: rgba(245, 240, 255, 0.85);
+  line-height: 1.85;
+  margin: 0 0 1.4rem;
+  white-space: pre-wrap;
+}
+
+.reflectionBox {
+  background: rgba(124, 92, 255, 0.1);
+  border-left: 3px solid rgba(124, 92, 255, 0.5);
+  border-radius: 0 12px 12px 0;
+  padding: 0.9rem 1.1rem;
+}
+
+.reflectionLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(192, 143, 255, 0.6);
+  margin: 0 0 0.4rem;
+  display: block;
+}
+
+.reflectionQuestion {
+  font-size: 0.92rem;
+  color: rgba(220, 210, 255, 0.9);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+.portraitMeta {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+// ─── empty / generate states ─────────────────────────────────────
+.emptyPortrait {
+  text-align: center;
+  padding: 1rem 0;
+
+  p {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.88rem;
+    margin: 0 0 1.2rem;
+    line-height: 1.6;
+  }
+}
+
+.generateBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.6rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c5cff, #c08fff);
+  box-shadow: 0 10px 24px rgba(124, 92, 255, 0.28);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(124, 92, 255, 0.38);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.loadingPortrait {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid rgba(124, 92, 255, 0.2);
+  border-top-color: #7c5cff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ─── tests section ────────────────────────────────────────────────
+.testsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.testCard {
+  background: rgba(255, 255, 255, 0.055);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.testIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.testInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.testTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 0.25rem;
+}
+
+.testTagline {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0.3rem;
+}
+
+.testDuration {
+  font-size: 0.75rem;
+  color: rgba(192, 143, 255, 0.6);
+}
+
+.startTestBtn {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c5cff, #c08fff);
+  box-shadow: 0 6px 16px rgba(124, 92, 255, 0.22);
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// ─── completed tests ─────────────────────────────────────────────
+.completedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.completedCard {
+  background: rgba(255, 255, 255, 0.045);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 1.2rem 1.4rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.07);
+  }
+}
+
+.completedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.completedTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.completedDate {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.completedPreview {
+  font-size: 0.83rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: italic;
+}
+
+// ─── expanded interpretation ──────────────────────────────────────
+.expandedCard {
+  background: rgba(255, 250, 244, 0.97);
+  border-radius: 24px;
+  padding: 2rem;
+  margin-top: -0.4rem;
+  box-shadow: 0 20px 50px rgba(28, 17, 58, 0.35);
+}
+
+.expandedTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d243f;
+  margin: 0 0 1rem;
+}
+
+.expandedText {
+  font-size: 0.9rem;
+  color: #3a3050;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  margin: 0 0 1rem;
+}
+
+.collapseBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9d8eb8;
+  font-size: 0.83rem;
+  padding: 0;
+
+  &:hover {
+    color: #5b5168;
+  }
+}
+
+.noTests {
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
+// ─── birth chart card ─────────────────────────────────────────
+.birthChartCard {
+  background: rgba(255, 255, 255, 0.055);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 220, 150, 0.12);
+  padding: 1.8rem;
+}
+
+.birthChartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.birthChartIntro {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  margin: 0 0 1.4rem;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fieldLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 220, 150, 0.6);
+}
+
+.fieldInput {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+  color-scheme: dark;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  &:focus {
+    border-color: rgba(255, 220, 150, 0.4);
+  }
+}
+
+.chartError {
+  font-size: 0.82rem;
+  color: #d97a8a;
+  margin: 0 0 1rem;
+}
+
+// ─── chart result ─────────────────────────────────────────────
+.chartResult {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.signsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.signPill {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(255, 220, 150, 0.08);
+  border: 1px solid rgba(255, 220, 150, 0.18);
+  border-radius: 14px;
+  padding: 0.6rem 1rem;
+  flex: 1;
+  min-width: 120px;
+}
+
+.signSymbol {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.signInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.signLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 220, 150, 0.55);
+}
+
+.signName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 240, 200, 0.92);
+}
+
+.chartNote {
+  font-size: 0.78rem;
+  color: rgba(255, 220, 150, 0.45);
+  font-style: italic;
+  margin: 0;
+}
+
+.chartInterpretation {
+  font-size: 0.9rem;
+  color: rgba(245, 240, 255, 0.82);
+  line-height: 1.85;
+  margin: 0;
+  white-space: pre-wrap;
+}

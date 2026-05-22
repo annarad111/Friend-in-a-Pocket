@@ -16,8 +16,8 @@
   box-shadow:
     0 20px 60px rgba(28, 17, 58, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
-    max-height: 80vh;
-    overflow: scroll;
+  max-height: 90vh;
+  overflow: scroll;
 }
 
 .header {
@@ -81,10 +81,156 @@
   cursor: pointer;
   background: linear-gradient(135deg, #9d7cff 0%, #c08fff 100%);
   box-shadow: 0 12px 24px rgba(137, 102, 241, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
 }
 
 .enterButton:hover {
   transform: translateY(-1px);
   box-shadow: 0 16px 28px rgba(137, 102, 241, 0.32);
+}
+
+.icon {
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  svg {
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 4px 10px rgba(120, 90, 200, 0.15));
+  }
+}
+
+// ─── lock-in ceremony overlay ────────────────────────────────────
+.ceremonyOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgba(18, 10, 40, 0.72);
+  backdrop-filter: blur(16px);
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ceremonyCard {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 250, 244, 0.96);
+  border-radius: 32px;
+  padding: 2.8rem 2.4rem;
+  text-align: center;
+  box-shadow:
+    0 32px 80px rgba(28, 17, 58, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ceremonyGlyph {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.4rem;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.96); }
+}
+
+.ceremonyTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2d243f;
+  margin: 0 0 1.2rem;
+  line-height: 1.3;
+  font-family: 'Playwrite NO', 'Caveat', cursive;
+}
+
+.ceremonyText {
+  font-size: 1rem;
+  color: #5b5168;
+  line-height: 1.8;
+  margin: 0 0 1.4rem;
+}
+
+.ceremonyDivider {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, #9d7cff, #c08fff);
+  border-radius: 99px;
+  margin: 0 auto 1.4rem;
+}
+
+.ceremonyPromise {
+  font-size: 0.9rem;
+  color: #7c7090;
+  line-height: 1.7;
+  margin: 0 0 2rem;
+  font-style: italic;
+}
+
+.lockButton {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c5cff 0%, #c08fff 100%);
+  box-shadow: 0 12px 28px rgba(124, 92, 255, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 1rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(124, 92, 255, 0.4);
+  }
+}
+
+.backLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9d8eb8;
+  font-size: 0.88rem;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: #7c5cff;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ceremonyCard {
+    padding: 2rem 1.6rem;
+  }
 }

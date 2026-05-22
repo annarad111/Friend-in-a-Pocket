@@ -19,6 +19,7 @@ export type StoredOnboardingProfile = {
   favoriteColor: string;
   favoriteInstrument: string;
   generatedProfile: GeneratedOnboardingProfile | null;
+  lockedAt?: string; // ISO — when the friendship was officially sealed
 };
 
 export type OnboardingState = {

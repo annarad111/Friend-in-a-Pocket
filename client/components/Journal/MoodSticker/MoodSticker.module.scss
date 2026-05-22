@@ -1,0 +1,71 @@
+// → client/components/Journal/MoodSticker/MoodSticker.module.scss
+
+@use '../journalTokens' as t;
+
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.sticker {
+  position: relative;
+  display: inline-block;
+  width: var(--mood-size, 64px);
+  height: var(--mood-size, 64px);
+  transform: rotate(var(--mood-rotate, 0deg));
+  transition: transform 0.18s ease, filter 0.18s ease;
+  filter: drop-shadow(0 4px 6px rgba(28, 17, 58, 0.25));
+
+  svg {
+    display: block;
+  }
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  transform: rotate(var(--mood-rotate, 0deg)) translateY(-2px) scale(1.04);
+}
+
+.interactive:focus-visible {
+  outline: none;
+
+  .selectionRing {
+    border-color: t.$accent;
+  }
+}
+
+.selected {
+  transform: rotate(var(--mood-rotate, 0deg)) scale(1.08);
+  filter: drop-shadow(0 6px 10px rgba(124, 92, 255, 0.35));
+}
+
+.dimmed {
+  filter: grayscale(0.65) opacity(0.45);
+}
+
+.selectionRing {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2.5px dashed t.$accent;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.label {
+  font-family: t.$font-ui;
+  font-size: 11px;
+  font-weight: 600;
+  color: t.$ink-soft;
+  letter-spacing: 0.3px;
+}

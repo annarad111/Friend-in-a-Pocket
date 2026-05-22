@@ -5,6 +5,8 @@ import { ChatMessage } from "@/types/chat";
 import { MessageBubble } from "@/components/MessageBuble/MessageBuble";
 import styles from "./ChatWindow.module.scss";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
+import { JournalInvite } from "../Journal/JournalInvite/JournalInvite";
+import { useJournalStore } from "@/store/useJournalStore";
 
 type Props = {
   messages: ChatMessage[];
@@ -13,13 +15,12 @@ type Props = {
 
 export const ChatWindow = ({ messages, isTyping }: Props) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
-    const {
-      profile
-    } = useOnboardingStore();
+  const { profile } = useOnboardingStore();
+  const isOpen = useJournalStore((s) => s.isJournalInviteOpen);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, [messages, isTyping, isOpen]);
 
   return (
     <div className={styles.container}>
@@ -36,6 +37,8 @@ export const ChatWindow = ({ messages, isTyping }: Props) => {
       {messages.map((message) => (
         <MessageBubble key={message.id} message={message} />
       ))}
+
+      {!isTyping && <JournalInvite />}
 
       {isTyping && (
         <div className={styles.typingWrapper}>

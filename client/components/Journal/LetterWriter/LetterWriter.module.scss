@@ -1,0 +1,464 @@
+@use '../journalTokens' as t;
+
+.stage {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 24px;
+  overflow: hidden;
+  font-family: t.$font-ui;
+  color: #f5f0ff;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top, rgba(80, 50, 160, 0.4), transparent 35%),
+    linear-gradient(180deg, #1a1040 0%, #251650 45%, #13102e 100%);
+  overflow: hidden;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  background-image:
+    radial-gradient(2px 2px at 40px 60px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 140px 100px, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(2px 2px at 260px 160px, rgba(255, 240, 210, 0.7), transparent),
+    radial-gradient(1.4px 1.4px at 340px 220px, rgba(255, 255, 255, 0.5), transparent);
+  background-size: 360px 260px;
+  animation: drift 100s linear infinite;
+}
+
+@keyframes drift {
+  from { background-position: 0 0; }
+  to { background-position: 360px 260px; }
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+}
+.glowA { width: 320px; height: 320px; background: rgba(160, 110, 255, 0.35); top: 5%; right: 5%; }
+.glowB { width: 400px; height: 400px; background: rgba(255, 180, 230, 0.18); bottom: 5%; left: 2%; }
+
+// ─── layout ──────────────────────────────────────────────────────
+.layout {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.backLink {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+
+  &:hover { color: rgba(255, 255, 255, 0.9); }
+}
+
+.topTitle {
+  text-align: center;
+
+  h1 {
+    margin: 0 0 0.2rem;
+    font-size: 1.35rem;
+    font-family: t.$font-hand;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.topSpacer { width: 80px; }
+
+// ─── notebook page content ────────────────────────────────────────
+.page {
+  padding: 2rem 2.4rem 1.6rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.toLine {
+  font-family: t.$font-hand;
+  font-size: 1.15rem;
+  color: t.$ink-soft;
+  line-height: 1.4;
+
+  span {
+    color: t.$accent;
+    font-size: 1.3rem;
+  }
+}
+
+.dateLine {
+  font-size: 0.78rem;
+  color: t.$ink-faint;
+  text-align: right;
+}
+
+.writingLabel {
+  display: block;
+  font-size: 0.8rem;
+  color: t.$ink-faint;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.writing {
+  width: 100%;
+  min-height: 240px;
+  max-height: 420px;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: t.$font-hand;
+  font-size: 1.05rem;
+  line-height: 2.1;
+  color: t.$ink;
+  padding: 0;
+
+  &::placeholder {
+    color: t.$ink-faint;
+    font-style: italic;
+  }
+}
+
+// ─── delivery picker ─────────────────────────────────────────────
+.deliverySection {
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed rgba(124, 92, 255, 0.18);
+}
+
+.deliveryLabel {
+  font-size: 0.8rem;
+  color: t.$ink-faint;
+  margin: 0 0 0.75rem;
+  font-style: italic;
+}
+
+.deliveryOptions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.deliveryPill {
+  padding: 0.45rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 92, 255, 0.28);
+  background: rgba(124, 92, 255, 0.07);
+  color: t.$ink-soft;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(124, 92, 255, 0.14);
+    border-color: rgba(124, 92, 255, 0.45);
+  }
+}
+
+.deliveryPillActive {
+  background: rgba(124, 92, 255, 0.16);
+  border-color: t.$accent;
+  color: t.$accent;
+  font-weight: 600;
+}
+
+.deliveryHint {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  color: t.$ink-faint;
+  font-style: italic;
+}
+
+// ─── mood row ────────────────────────────────────────────────────
+.moodSection {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(124, 92, 255, 0.18);
+}
+
+.moodLabel {
+  font-size: 0.8rem;
+  color: t.$ink-faint;
+  margin: 0 0 0.6rem;
+  font-style: italic;
+}
+
+.moodRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+// ─── footer / seal ───────────────────────────────────────────────
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.6rem;
+  gap: 1rem;
+}
+
+.wordCount {
+  font-size: 0.78rem;
+  color: t.$ink-faint;
+}
+
+.sealButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, t.$accent 0%, t.$accent-soft 100%);
+  box-shadow: 0 8px 20px rgba(124, 92, 255, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(124, 92, 255, 0.35);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+// ─── letters list ────────────────────────────────────────────────
+.listSection {
+  background: rgba(255, 250, 244, 0.08);
+  border-radius: 22px;
+  padding: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.listTitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 1rem;
+  font-family: t.$font-hand;
+  letter-spacing: 0.02em;
+}
+
+.letterItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.6rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.letterIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.letterMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.letterStatus {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.3rem;
+}
+
+.statusScheduled { color: rgba(192, 143, 255, 0.8); }
+.statusDelivered { color: #a8e6a0; }
+.statusOpened { color: rgba(255, 255, 255, 0.4); }
+
+.letterDate {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 0.4rem;
+}
+
+.letterPreview {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin: 0;
+  font-style: italic;
+}
+
+.letterAction {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.openAction {
+  background: rgba(168, 230, 160, 0.15);
+  color: #a8e6a0;
+  border: 1px solid rgba(168, 230, 160, 0.3);
+
+  &:hover { background: rgba(168, 230, 160, 0.25); }
+}
+
+.deleteAction {
+  background: rgba(255, 100, 100, 0.1);
+  color: rgba(255, 150, 150, 0.7);
+  border: 1px solid rgba(255, 100, 100, 0.15);
+
+  &:hover { background: rgba(255, 100, 100, 0.18); }
+}
+
+.emptyList {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.writeButton {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(192, 143, 255, 0.4);
+  background: rgba(124, 92, 255, 0.07);
+  color: rgba(192, 143, 255, 0.85);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  margin-top: 0.8rem;
+
+  &:hover {
+    background: rgba(124, 92, 255, 0.14);
+    border-color: rgba(192, 143, 255, 0.6);
+    color: rgba(192, 143, 255, 1);
+  }
+}
+
+// ─── confirmation overlay ─────────────────────────────────────────
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgba(18, 10, 40, 0.75);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.confirmCard {
+  max-width: 440px;
+  width: 100%;
+  background: rgba(255, 250, 244, 0.97);
+  border-radius: 28px;
+  padding: 2.4rem 2rem;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(28, 17, 58, 0.4);
+  animation: slideUp 0.35s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.confirmIcon {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.confirmTitle {
+  font-size: 1.4rem;
+  font-family: t.$font-hand;
+  font-weight: 400;
+  color: #2d243f;
+  margin: 0 0 0.8rem;
+}
+
+.confirmText {
+  font-size: 0.92rem;
+  color: #5b5168;
+  line-height: 1.7;
+  margin: 0 0 1.6rem;
+}
+
+.confirmButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.6rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c5cff 0%, #c08fff 100%);
+  box-shadow: 0 10px 24px rgba(124, 92, 255, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(124, 92, 255, 0.38);
+  }
+}

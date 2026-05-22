@@ -1,0 +1,271 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(10, 6, 30, 0.92);
+  backdrop-filter: blur(20px);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(255, 250, 244, 0.97);
+  border-radius: 28px;
+  padding: 2.4rem 2.2rem;
+  box-shadow: 0 32px 80px rgba(28, 17, 58, 0.5);
+  animation: rise 0.4s ease;
+}
+
+@keyframes rise {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+// ─── intro ────────────────────────────────────────────────────────
+.introGlyph {
+  font-size: 2.6rem;
+  text-align: center;
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+.introTag {
+  display: inline-block;
+  background: rgba(124, 92, 255, 0.1);
+  color: #7c5cff;
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.introTitle {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #2d243f;
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+  font-family: 'Playwrite NO', 'Caveat', cursive;
+}
+
+.introTagline {
+  font-size: 0.95rem;
+  color: #5b5168;
+  margin: 0 0 1rem;
+  font-style: italic;
+}
+
+.introDesc {
+  font-size: 0.9rem;
+  color: #61576e;
+  line-height: 1.7;
+  margin: 0 0 0.6rem;
+}
+
+.introDuration {
+  font-size: 0.8rem;
+  color: #9d8eb8;
+  margin: 0 0 1.8rem;
+}
+
+// ─── question ────────────────────────────────────────────────────
+.stepHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.stepPills {
+  display: flex;
+  gap: 5px;
+}
+
+.stepPip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(124, 92, 255, 0.18);
+  transition: background 0.2s ease;
+
+  &.active { background: #7c5cff; }
+  &.done { background: rgba(124, 92, 255, 0.45); }
+}
+
+.stepClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9d8eb8;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+
+  &:hover { color: #5b5168; }
+}
+
+.questionText {
+  font-size: 1.05rem;
+  color: #2d243f;
+  line-height: 1.7;
+  margin: 0 0 1.2rem;
+}
+
+.answerBox {
+  width: 100%;
+  min-height: 120px;
+  border: 1.5px solid rgba(124, 92, 255, 0.22);
+  border-radius: 16px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.95rem;
+  font-family: 'Playwrite NO', 'Caveat', cursive;
+  color: #2a2342;
+  line-height: 1.7;
+  resize: none;
+  outline: none;
+  background: rgba(124, 92, 255, 0.03);
+  transition: border-color 0.2s ease;
+
+  &:focus { border-color: rgba(124, 92, 255, 0.5); }
+
+  &::placeholder {
+    color: #bbb3cc;
+    font-style: italic;
+  }
+}
+
+.stepActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.2rem;
+  gap: 1rem;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9d8eb8;
+  font-size: 0.88rem;
+  padding: 0;
+
+  &:hover { color: #5b5168; }
+  &:disabled { opacity: 0.3; cursor: default; }
+}
+
+.nextBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c5cff, #c08fff);
+  box-shadow: 0 8px 18px rgba(124, 92, 255, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 22px rgba(124, 92, 255, 0.35);
+  }
+
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+// ─── loading ─────────────────────────────────────────────────────
+.loadingWrap {
+  text-align: center;
+  padding: 1rem 0;
+
+  p {
+    margin: 1rem 0 0;
+    color: #5b5168;
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(124, 92, 255, 0.15);
+  border-top-color: #7c5cff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ─── result ──────────────────────────────────────────────────────
+.resultTag {
+  display: inline-block;
+  background: rgba(168, 230, 160, 0.15);
+  color: #3a8a5a;
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.resultTitle {
+  font-size: 1.3rem;
+  font-family: 'Playwrite NO', 'Caveat', cursive;
+  font-weight: 400;
+  color: #2d243f;
+  margin: 0 0 1.2rem;
+}
+
+.interpretationText {
+  font-size: 0.92rem;
+  color: #3a3050;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  margin: 0 0 1.4rem;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: rgba(124, 92, 255, 0.25); border-radius: 2px; }
+}
+
+.primaryBtn {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c5cff, #c08fff);
+  box-shadow: 0 10px 24px rgba(124, 92, 255, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(124, 92, 255, 0.38);
+  }
+}
