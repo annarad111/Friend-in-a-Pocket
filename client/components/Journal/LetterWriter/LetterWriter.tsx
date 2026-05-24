@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useMicrophoneInput } from "@/hooks/useMicrophoneInput";
+import { MicButton } from "@/components/MicButton/MicButton";
 import { useJournalStore } from "@/store/useJournalStore";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
 import { NotebookPage } from "@/components/Journal/NotebookPage/NotebookPage";
@@ -81,6 +83,8 @@ export const LetterWriter = ({ onLetterOpened }: LetterWriterProps) => {
     loadJournal();
     checkDeliverableLetters();
   }, [loadJournal, checkDeliverableLetters]);
+
+  const mic = useMicrophoneInput(body, setBody);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -190,15 +194,26 @@ export const LetterWriter = ({ onLetterOpened }: LetterWriterProps) => {
                   <label className={styles.writingLabel} htmlFor="letter-body">
                     say what you need to say — past you will mean it
                   </label>
-                  <textarea
-                    ref={textareaRef}
-                    id="letter-body"
-                    className={styles.writing}
-                    placeholder="Dear future me, right now I'm feeling..."
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
-                    rows={8}
-                  />
+                  <div className={styles.writingWrap}>
+                    <textarea
+                      ref={textareaRef}
+                      id="letter-body"
+                      className={styles.writing}
+                      placeholder="Dear future me, right now I'm feeling..."
+                      value={body}
+                      onChange={(e) => setBody(e.target.value)}
+                      rows={8}
+                    />
+                    {mic.isSupported && (
+                      <div className={styles.micRow}>
+                        <MicButton
+                          micState={mic.micState}
+                          onToggle={mic.toggle}
+                          error={mic.error}
+                        />
+                      </div>
+                    )}
+                  </div>
 
                   <div className={styles.deliverySection}>
                     <p className={styles.deliveryLabel}>

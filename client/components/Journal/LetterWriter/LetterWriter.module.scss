@@ -185,6 +185,17 @@
   font-style: italic;
 }
 
+.writingWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.micRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
 .writing {
   width: 100%;
   min-height: 100px;

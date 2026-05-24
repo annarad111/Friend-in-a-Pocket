@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
+import { useMicrophoneInput } from "@/hooks/useMicrophoneInput";
+import { MicButton } from "@/components/MicButton/MicButton";
 import { useJournalStore } from "@/store/useJournalStore";
 import { useOnboardingStore } from "@/store/useOnboardingStore";
 import { getDailyPrompt, todayKey } from "@/lib/getDailyPrompt";
@@ -94,6 +96,8 @@ export const JournalEntry = () => {
     ta.style.height = `${next}px`;
   }, [draft.body]);
 
+  const mic = useMicrophoneInput(draft.body, setDraftBody);
+
   const handleSeal = (event: React.FormEvent) => {
     event.preventDefault();
     if (!canSeal) return;
@@ -183,15 +187,26 @@ export const JournalEntry = () => {
               <label className={styles.writingLabel} htmlFor="journal-body">
                 <span className="sr-only">your reflection</span>
               </label>
-              <textarea
-                ref={textareaRef}
-                id="journal-body"
-                className={styles.writing}
-                placeholder="start anywhere — even crooked. nobody&rsquo;s grading."
-                value={draft.body}
-                onChange={(e) => setDraftBody(e.target.value)}
-                rows={6}
-              />
+              <div className={styles.writingWrap}>
+                <textarea
+                  ref={textareaRef}
+                  id="journal-body"
+                  className={styles.writing}
+                  placeholder="start anywhere — even crooked. nobody's grading."
+                  value={draft.body}
+                  onChange={(e) => setDraftBody(e.target.value)}
+                  rows={6}
+                />
+                {mic.isSupported && (
+                  <div className={styles.micRow}>
+                    <MicButton
+                      micState={mic.micState}
+                      onToggle={mic.toggle}
+                      error={mic.error}
+                    />
+                  </div>
+                )}
+              </div>
 
               <section className={styles.sideNotes}>
                 <div className={styles.sideNotesIntro}>

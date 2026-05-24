@@ -1,0 +1,65 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(94, 68, 200, 0.3);
+  background: rgba(255, 250, 244, 0.75);
+  color: #5e44c8;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(124, 92, 255, 0.12);
+    border-color: rgba(94, 68, 200, 0.5);
+    transform: scale(1.08);
+  }
+
+  &.listening {
+    background: rgba(217, 122, 138, 0.15);
+    border-color: #d97a8a;
+    color: #c0566a;
+    animation: pulseRing 1.6s ease-out infinite;
+  }
+
+  &.hasError {
+    background: rgba(161, 43, 43, 0.08);
+    border-color: rgba(161, 43, 43, 0.4);
+    color: #a12b2b;
+  }
+}
+
+.errorMsg {
+  font-size: 0.72rem;
+  color: #a12b2b;
+  margin: 0;
+  max-width: 200px;
+  text-align: right;
+  line-height: 1.4;
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 122, 138, 0.55);
+  }
+  65% {
+    box-shadow: 0 0 0 9px rgba(217, 122, 138, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 122, 138, 0);
+  }
+}

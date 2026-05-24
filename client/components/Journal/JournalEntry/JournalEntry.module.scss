@@ -244,6 +244,17 @@
   display: none;
 }
 
+.writingWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.micRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
 .writing {
   display: block;
   width: 100%;
