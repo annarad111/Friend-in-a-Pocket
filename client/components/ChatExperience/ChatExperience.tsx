@@ -10,6 +10,7 @@ import { useInsightsStore } from "@/store/useInsightsStore";
 import { Notebook, Mail, Sparkles, RotateCcw } from "lucide-react";
 import styles from "./ChatExperience.module.scss";
 import Link from "next/link";
+import { useState } from "react";
 import { JournalInvite } from "../Journal/JournalInvite/JournalInvite";
 import { useJournalStore } from "@/store/useJournalStore";
 import { detectJournalIntent } from "@/lib/detectJournalIntent";
@@ -17,6 +18,8 @@ import { detectJournalIntent } from "@/lib/detectJournalIntent";
 const MAX_HISTORY_MESSAGES = 8;
 
 export const ChatExperience = () => {
+  const [isNavigating, setIsNavigating] = useState(false);
+
   const { sendMessage } = useChatSocket();
 
   const {
@@ -120,6 +123,7 @@ export const ChatExperience = () => {
                 className={styles.journalButton}
                 title="Open journal"
                 aria-label="Open journal"
+                onClick={() => setIsNavigating(true)}
               >
                 <Notebook size={18} />
               </Link>
@@ -128,6 +132,7 @@ export const ChatExperience = () => {
                 className={styles.journalButton}
                 title="Letters to future self"
                 aria-label="Letters"
+                onClick={() => setIsNavigating(true)}
               >
                 <Mail size={18} />
               </Link>
@@ -136,6 +141,7 @@ export const ChatExperience = () => {
                 className={styles.journalButton}
                 title="Your inner portrait & tests"
                 aria-label="Insights"
+                onClick={() => setIsNavigating(true)}
               >
                 <Sparkles size={18} />
               </Link>
@@ -161,6 +167,15 @@ export const ChatExperience = () => {
           />
         </div>
       </section>
+
+      {isNavigating && (
+        <div className={styles.navOverlay} aria-live="polite" aria-label="Loading page">
+          <div className={styles.navOverlayCard}>
+            <div className={styles.navSpinner} />
+            <span>Se încarcă...</span>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

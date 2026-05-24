@@ -163,6 +163,47 @@
   }
 }
 
+.navOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 30, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.navOverlayCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.8rem 2.4rem;
+  background: rgba(255, 250, 244, 0.88);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(66, 42, 14, 0.18);
+  color: #3f3c3a;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.navSpinner {
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid rgba(124, 92, 255, 0.2);
+  border-top-color: #7c5cff;
+  border-radius: 50%;
+  animation: navSpin 0.85s linear infinite;
+}
+
+@keyframes navSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 768px) {
   .page {
     padding: 10px;
