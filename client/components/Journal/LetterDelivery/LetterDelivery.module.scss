@@ -175,3 +175,33 @@
   margin-top: 0.8rem;
   font-style: italic;
 }
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: 1rem;
+    align-items: flex-end;
+  }
+
+  .envelopeWrap {
+    gap: 1.4rem;
+  }
+
+  .envelopeOuter {
+    width: 240px;
+  }
+
+  .letterWrap {
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+  }
+
+  .paper {
+    padding: 1.4rem 1.2rem;
+    border-radius: 16px;
+  }
+
+  .letterBody {
+    font-size: 0.98rem;
+    line-height: 1.85;
+  }
+}

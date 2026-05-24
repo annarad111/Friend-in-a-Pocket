@@ -247,7 +247,7 @@ const Scrubber = ({
               >
                 <MoodSticker
                   mood={e.mood}
-                  size={isActive ? 24 : 18}
+                  size={isActive ? 56 : 56}
                   dimmed={!isActive}
                 />
                 <span onClick={() => deleteEntry(e.id)}>X</span>
@@ -271,7 +271,7 @@ const FlipArrow = ({
 }) => (
   <button
     type="button"
-    className={styles.flipArrow}
+    className={dir === "left" ? styles.flipArrowLeft : styles.flipArrowRight}
     onClick={onClick}
     disabled={disabled}
     aria-label={dir === "left" ? "Older chapter" : "Newer chapter"}

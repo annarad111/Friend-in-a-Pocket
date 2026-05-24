@@ -1,4 +1,4 @@
-@use '../journalTokens' as t;
+@use "../journalTokens" as t;
 
 .stage {
   position: relative;
@@ -29,17 +29,37 @@
   inset: 0;
   opacity: 0.45;
   background-image:
-    radial-gradient(2px 2px at 40px 60px, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(1.5px 1.5px at 140px 100px, rgba(255, 255, 255, 0.65), transparent),
-    radial-gradient(2px 2px at 260px 160px, rgba(255, 240, 210, 0.7), transparent),
-    radial-gradient(1.4px 1.4px at 340px 220px, rgba(255, 255, 255, 0.5), transparent);
+    radial-gradient(
+      2px 2px at 40px 60px,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    ),
+    radial-gradient(
+      1.5px 1.5px at 140px 100px,
+      rgba(255, 255, 255, 0.65),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 260px 160px,
+      rgba(255, 240, 210, 0.7),
+      transparent
+    ),
+    radial-gradient(
+      1.4px 1.4px at 340px 220px,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
   background-size: 360px 260px;
   animation: drift 100s linear infinite;
 }
 
 @keyframes drift {
-  from { background-position: 0 0; }
-  to { background-position: 360px 260px; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 360px 260px;
+  }
 }
 
 .glow {
@@ -48,8 +68,20 @@
   filter: blur(80px);
   opacity: 0.25;
 }
-.glowA { width: 320px; height: 320px; background: rgba(160, 110, 255, 0.35); top: 5%; right: 5%; }
-.glowB { width: 400px; height: 400px; background: rgba(255, 180, 230, 0.18); bottom: 5%; left: 2%; }
+.glowA {
+  width: 320px;
+  height: 320px;
+  background: rgba(160, 110, 255, 0.35);
+  top: 5%;
+  right: 5%;
+}
+.glowB {
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 180, 230, 0.18);
+  bottom: 5%;
+  left: 2%;
+}
 
 // ─── layout ──────────────────────────────────────────────────────
 .layout {
@@ -70,12 +102,26 @@
 }
 
 .backLink {
-  color: rgba(255, 255, 255, 0.65);
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.15s ease;
+  font-family: t.$font-ui;
+  font-size: 13px;
+  color: rgba(245, 240, 255, 0.85);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: background 0.15s ease;
 
-  &:hover { color: rgba(255, 255, 255, 0.9); }
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.backLinkContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .topTitle {
@@ -97,7 +143,9 @@
   }
 }
 
-.topSpacer { width: 80px; }
+.topSpacer {
+  width: 80px;
+}
 
 // ─── notebook page content ────────────────────────────────────────
 .page {
@@ -139,8 +187,9 @@
 
 .writing {
   width: 100%;
-  min-height: 240px;
-  max-height: 420px;
+  min-height: 100px;
+  max-height: 220px;
+  overflow-y: scroll;
   resize: none;
   border: none;
   outline: none;
@@ -174,7 +223,6 @@
 .deliveryOptions {
   display: flex;
   gap: 0.6rem;
-  flex-wrap: wrap;
 }
 
 .deliveryPill {
@@ -251,7 +299,9 @@
   cursor: pointer;
   background: linear-gradient(135deg, t.$accent 0%, t.$accent-soft 100%);
   box-shadow: 0 8px 20px rgba(124, 92, 255, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
@@ -290,7 +340,9 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 0.6rem;
 
-  &:last-child { margin-bottom: 0; }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .letterIcon {
@@ -312,9 +364,15 @@
   margin: 0 0 0.3rem;
 }
 
-.statusScheduled { color: rgba(192, 143, 255, 0.8); }
-.statusDelivered { color: #a8e6a0; }
-.statusOpened { color: rgba(255, 255, 255, 0.4); }
+.statusScheduled {
+  color: rgba(192, 143, 255, 0.8);
+}
+.statusDelivered {
+  color: #a8e6a0;
+}
+.statusOpened {
+  color: rgba(255, 255, 255, 0.4);
+}
 
 .letterDate {
   font-size: 0.82rem;
@@ -349,7 +407,9 @@
   color: #a8e6a0;
   border: 1px solid rgba(168, 230, 160, 0.3);
 
-  &:hover { background: rgba(168, 230, 160, 0.25); }
+  &:hover {
+    background: rgba(168, 230, 160, 0.25);
+  }
 }
 
 .deleteAction {
@@ -357,7 +417,9 @@
   color: rgba(255, 150, 150, 0.7);
   border: 1px solid rgba(255, 100, 100, 0.15);
 
-  &:hover { background: rgba(255, 100, 100, 0.18); }
+  &:hover {
+    background: rgba(255, 100, 100, 0.18);
+  }
 }
 
 .emptyList {
@@ -366,6 +428,66 @@
   color: rgba(255, 255, 255, 0.35);
   font-size: 0.88rem;
   font-style: italic;
+}
+
+// ─── mobile ───────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .stage {
+    padding: 20px 14px 60px;
+  }
+
+  .layout {
+    gap: 0.4rem;
+  }
+
+  .topBar {
+    flex-direction: column;
+  }
+
+  .topTitle h1 {
+    font-size: 1.15rem;
+  }
+
+  .page {
+    padding: 1.4rem 1.2rem 1.2rem;
+  }
+
+  .writing {
+    min-height: 180px;
+    font-size: 0.98rem;
+    line-height: 1.9;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+
+  .sealButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .confirmCard {
+    padding: 1.8rem 1.4rem;
+    border-radius: 22px;
+  }
+
+  .letterItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deliveryPill {
+    padding: 10px 12px;
+  }
+
+  .letterMeta {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .writeButton {
@@ -381,6 +503,7 @@
   text-align: center;
   transition: all 0.15s ease;
   margin-top: 0.8rem;
+  margin-bottom: 10px;
 
   &:hover {
     background: rgba(124, 92, 255, 0.14);
@@ -403,8 +526,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .confirmCard {
@@ -419,8 +546,14 @@
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .confirmIcon {
@@ -454,7 +587,9 @@
   cursor: pointer;
   background: linear-gradient(135deg, #7c5cff 0%, #c08fff 100%);
   box-shadow: 0 10px 24px rgba(124, 92, 255, 0.28);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   width: 100%;
 
   &:hover {

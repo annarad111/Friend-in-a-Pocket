@@ -108,18 +108,10 @@ export const JournalEntry = () => {
         <WashiTape
           color="yellow"
           pattern="stripes"
-          width={120}
+          width={90}
           height={26}
-          rotate={-7}
-          style={{ top: -14, left: 40, zIndex: 3 }}
-        />
-        <WashiTape
-          color="pink"
-          pattern="dots"
-          width={100}
-          height={22}
-          rotate={8}
-          style={{ top: -10, right: 50, zIndex: 3 }}
+          rotate={-160}
+          style={{ bottom: 0, left: -9, zIndex: 3 }}
         />
 
         <NotebookPage
@@ -186,12 +178,6 @@ export const JournalEntry = () => {
                   today&rsquo;s prompt, from {friendName}:
                 </p>
                 <p className={styles.promptQuestion}>{todayPrompt.question}</p>
-                <Doodle
-                  kind="underline"
-                  size={110}
-                  color="#7c5cff"
-                  className={styles.promptUnderline}
-                />
               </section>
 
               <label className={styles.writingLabel} htmlFor="journal-body">

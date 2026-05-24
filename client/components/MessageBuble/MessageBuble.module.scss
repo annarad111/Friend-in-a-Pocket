@@ -16,6 +16,8 @@
   border-radius: 18px;
   border: 1px solid #e3d9cf;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  max-width: min(480px, 82vw);
+  word-break: break-word;
 }
 
 .user .bubble {

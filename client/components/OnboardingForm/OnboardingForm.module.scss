@@ -98,3 +98,21 @@
   transform: translateY(-1px);
   box-shadow: 0 16px 28px rgba(137, 102, 241, 0.32);
 }
+
+@media (max-width: 640px) {
+  .wrapper {
+    padding: 1rem;
+    align-items: flex-start;
+  }
+
+  .card {
+    padding: 1.4rem 1.2rem;
+    border-radius: 20px;
+    max-height: none;
+    min-height: calc(100dvh - 2rem);
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+}

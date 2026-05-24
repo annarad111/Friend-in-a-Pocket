@@ -31,6 +31,7 @@
   background: #7c5cff;
   color: white;
   transition: transform 0.15s ease, opacity 0.15s ease;
+  flex-shrink: 0;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
@@ -39,5 +40,24 @@
   &:disabled {
     opacity: 0.55;
     cursor: not-allowed;
+  }
+}
+
+@media (max-width: 768px) {
+  .textarea {
+    min-height: 56px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .button {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+  }
+
+  .wrapper {
+
   }
 }

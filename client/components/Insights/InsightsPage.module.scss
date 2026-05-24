@@ -1,3 +1,5 @@
+@use "../Journal/journalTokens.scss" as t;
+
 .stage {
   position: relative;
   min-height: 100vh;
@@ -159,7 +161,7 @@
   border: 1px solid rgba(255, 255, 255, 0.09);
   padding: 1.8rem;
   overflow: auto;
-  height: 500px;
+  min-height: 200px;
 }
 
 .portraitHeader {
@@ -595,4 +597,83 @@
   line-height: 1.85;
   margin: 0;
   white-space: pre-wrap;
+}
+
+// ─── mobile responsive ───────────────────────────────────────────
+@media (max-width: 768px) {
+  .stage {
+    padding: 20px 14px 60px;
+  }
+
+  .layout {
+    gap: 1.4rem;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pageTitle h1 {
+    font-size: 1.15rem;
+  }
+
+  .portraitCard {
+    padding: 1.2rem;
+    border-radius: 18px;
+  }
+
+  .portraitText {
+    font-size: 0.88rem;
+    line-height: 1.75;
+  }
+
+  .testCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: 16px;
+  }
+
+  .startTestBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .birthChartCard {
+    padding: 1.2rem;
+    border-radius: 18px;
+  }
+
+  .signsRow {
+    gap: 0.6rem;
+  }
+
+  .signPill {
+    min-width: 0;
+    flex: 1 1 calc(50% - 0.3rem);
+  }
+
+  .completedCard {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+  .backLink {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: t.$font-ui;
+    font-size: 13px;
+    color: rgba(245, 240, 255, 0.85);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
 }

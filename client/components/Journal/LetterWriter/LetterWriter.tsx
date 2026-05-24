@@ -8,7 +8,6 @@ import { NotebookPage } from "@/components/Journal/NotebookPage/NotebookPage";
 import { MoodSticker } from "@/components/Journal/MoodSticker/MoodSticker";
 import { MOODS } from "@/components/Journal/MoodSticker/moods";
 import { WashiTape } from "@/components/Journal/JournalDecor/WashiTape";
-import { Doodle } from "@/components/Journal/JournalDecor/Doodle";
 import type { FutureLetter, MoodKey } from "@/types/journal";
 import styles from "./LetterWriter.module.scss";
 
@@ -147,19 +146,9 @@ export const LetterWriter = ({ onLetterOpened }: LetterWriterProps) => {
 
       <div className={styles.layout}>
         <header className={styles.topBar}>
-          <div>
-            <Link href="/journal" className={styles.backLink}>
-              ← journal
-            </Link>
-            <button
-              type="button"
-              className={styles.backLink}
-              style={{ alignSelf: "flex-start" }}
-              onClick={() => setView("list")}
-            >
-              ← back to your letters
-            </button>
-          </div>
+          <Link href="/" className={styles.backLink}>
+            ← back to chat
+          </Link>
 
           <div className={styles.topTitle}>
             <h1>letters through time</h1>
@@ -277,7 +266,13 @@ export const LetterWriter = ({ onLetterOpened }: LetterWriterProps) => {
         ) : (
           <div className={styles.listSection}>
             <p className={styles.listTitle}>your sealed letters</p>
-
+            <button
+              type="button"
+              className={styles.writeButton}
+              onClick={() => setView("write")}
+            >
+              + write a new letter
+            </button>
             {sorted.length === 0 ? (
               <p className={styles.emptyList}>
                 no letters yet — write one and meet yourself later.
@@ -292,14 +287,6 @@ export const LetterWriter = ({ onLetterOpened }: LetterWriterProps) => {
                 />
               ))
             )}
-
-            <button
-              type="button"
-              className={styles.writeButton}
-              onClick={() => setView("write")}
-            >
-              + write a new letter
-            </button>
           </div>
         )}
       </div>

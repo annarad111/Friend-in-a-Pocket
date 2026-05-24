@@ -1,8 +1,8 @@
-@use '../journalTokens' as t;
+@use "../journalTokens" as t;
 
 .outer {
   position: relative;
-  width: var(--np-width, 720px);
+  width: 52vw;
   height: 80vh;
   transform: rotate(var(--np-tilt, 0deg));
   filter: drop-shadow(0 30px 60px #{t.$paper-shadow});
@@ -27,8 +27,12 @@
   background-image:
     radial-gradient(rgba(160, 140, 110, 0.06) 1px, transparent 1px),
     radial-gradient(rgba(160, 140, 110, 0.04) 1px, transparent 1px);
-  background-size: 3px 3px, 9px 9px;
-  background-position: 0 0, 1.5px 1.5px;
+  background-size:
+    3px 3px,
+    9px 9px;
+  background-position:
+    0 0,
+    1.5px 1.5px;
   pointer-events: none;
 }
 
@@ -38,7 +42,11 @@
   right: -40px;
   width: 220px;
   height: 220px;
-  background: radial-gradient(circle, rgba(217, 122, 138, 0.10), transparent 60%);
+  background: radial-gradient(
+    circle,
+    rgba(217, 122, 138, 0.1),
+    transparent 60%
+  );
   pointer-events: none;
 }
 
@@ -92,8 +100,16 @@
   width: 14px;
   height: 22px;
   border-radius: 8px;
-  background: linear-gradient(180deg, #c8bdb1 0%, #8a8078 40%, #6e6660 70%, #b8ada1 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    180deg,
+    #c8bdb1 0%,
+    #8a8078 40%,
+    #6e6660 70%,
+    #b8ada1 100%
+  );
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .spiralShadow {
@@ -132,4 +148,15 @@
   bottom: 0;
   right: 0;
   pointer-events: none;
+}
+
+@media (max-width: 780px) {
+  .outer {
+    height: 90vh;
+    margin-top: 5%;
+    width: 93vw;
+  }
+  .marginLine {
+    left: 10%;
+  }
 }

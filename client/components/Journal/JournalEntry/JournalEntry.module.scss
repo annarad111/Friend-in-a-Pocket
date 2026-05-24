@@ -1,8 +1,5 @@
-// → client/components/Journal/JournalEntry/JournalEntry.module.scss
+@use "../journalTokens" as t;
 
-@use '../journalTokens' as t;
-
-// ─── stage + dreamy backdrop ────────────────────────────────────
 .stage {
   position: relative;
   min-height: 100vh;
@@ -15,7 +12,6 @@
   font-family: t.$font-ui;
   color: #f5f0ff;
 
-  // Helper for visually-hidden labels.
   :global(.sr-only) {
     position: absolute;
     width: 1px;
@@ -45,12 +41,36 @@
   inset: 0;
   opacity: 0.5;
   background-image:
-    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.85), transparent),
-    radial-gradient(1.5px 1.5px at 120px 80px, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(2px 2px at 240px 140px, rgba(255, 240, 210, 0.75), transparent),
-    radial-gradient(1.4px 1.4px at 320px 200px, rgba(255, 255, 255, 0.55), transparent),
-    radial-gradient(1.2px 1.2px at 60px 200px, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(1.8px 1.8px at 200px 50px, rgba(255, 220, 170, 0.7), transparent);
+    radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(255, 255, 255, 0.85),
+      transparent
+    ),
+    radial-gradient(
+      1.5px 1.5px at 120px 80px,
+      rgba(255, 255, 255, 0.7),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 240px 140px,
+      rgba(255, 240, 210, 0.75),
+      transparent
+    ),
+    radial-gradient(
+      1.4px 1.4px at 320px 200px,
+      rgba(255, 255, 255, 0.55),
+      transparent
+    ),
+    radial-gradient(
+      1.2px 1.2px at 60px 200px,
+      rgba(255, 255, 255, 0.7),
+      transparent
+    ),
+    radial-gradient(
+      1.8px 1.8px at 200px 50px,
+      rgba(255, 220, 170, 0.7),
+      transparent
+    );
   background-size: 360px 260px;
   animation: drift 90s linear infinite;
 }
@@ -62,46 +82,39 @@
   opacity: 0.28;
 }
 .glowA {
-  width: 360px; height: 360px;
+  width: 360px;
+  height: 360px;
   background: rgba(171, 130, 255, 0.34);
-  top: 6%; left: 4%;
+  top: 6%;
+  left: 4%;
 }
 .glowB {
-  width: 460px; height: 460px;
+  width: 460px;
+  height: 460px;
   background: rgba(255, 194, 240, 0.18);
-  bottom: 4%; right: 2%;
+  bottom: 4%;
+  right: 2%;
 }
 .glowC {
-  width: 300px; height: 300px;
+  width: 300px;
+  height: 300px;
   background: rgba(132, 214, 255, 0.16);
-  bottom: 20%; left: 30%;
+  bottom: 20%;
+  left: 30%;
 }
 
 @keyframes drift {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-120px); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-120px);
+  }
 }
 
 .pageWrap {
   position: relative;
   z-index: 1;
-}
-
-// Scale the whole notebook down on narrow viewports so it fits without
-// reflowing internals (which would break the carefully-tuned positions).
-@media (max-width: 760px) {
-  .pageWrap {
-    transform: scale(0.55);
-    transform-origin: center top;
-    margin: -120px 0;
-  }
-}
-
-@media (max-width: 460px) {
-  .pageWrap {
-    transform: scale(0.46);
-    margin: -180px 0 -160px;
-  }
 }
 
 // ─── decorations attached to the page ───────────────────────────
@@ -111,8 +124,12 @@
   right: -22px;
   z-index: 4;
 }
-.stampSmall { font-size: 10px; }
-.stampBig   { font-size: 18px; }
+.stampSmall {
+  font-size: 10px;
+}
+.stampBig {
+  font-size: 18px;
+}
 
 .doodleCompass {
   position: absolute;
@@ -156,7 +173,9 @@
   gap: 12px;
 }
 
-.headerLeft { min-width: 0; }
+.headerLeft {
+  min-width: 0;
+}
 
 .pills {
   display: flex;
@@ -221,15 +240,9 @@
   color: t.$ink;
 }
 
-.promptUnderline {
-  position: absolute;
-  left: 60px;
-  bottom: -10px;
-  pointer-events: none;
+.writingLabel {
+  display: none;
 }
-
-// ─── writing area ───────────────────────────────────────────────
-.writingLabel { display: none; } // we use placeholder + sr-only
 
 .writing {
   display: block;
@@ -398,7 +411,10 @@
   box-shadow:
     0 8px 20px rgba(137, 102, 241, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
@@ -434,7 +450,9 @@
   }
 }
 
-.errorState p { color: t.$margin-line; }
+.errorState p {
+  color: t.$margin-line;
+}
 
 // ─── celebration overlay ────────────────────────────────────────
 .celebration {
@@ -497,7 +515,9 @@
   background: transparent;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
 
-  svg { display: block; }
+  svg {
+    display: block;
+  }
 }
 
 .celebrationCard {
@@ -507,7 +527,11 @@
   padding: 30px 32px 28px;
   border-radius: 28px;
   background:
-    radial-gradient(circle at 20% 0%, rgba(255, 194, 240, 0.18), transparent 55%),
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(255, 194, 240, 0.18),
+      transparent 55%
+    ),
     rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #f5f0ff;
@@ -533,9 +557,21 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
-.stampSun  { background: rgba(255, 194, 90, 0.22); color: #ffc26a; border: 1px solid rgba(255, 194, 90, 0.4); }
-.stampMint { background: rgba(60, 160, 120, 0.22); color: #7be0b3; border: 1px solid rgba(60, 160, 120, 0.4); }
-.stampPink { background: rgba(217, 122, 138, 0.22); color: #ffacb9; border: 1px solid rgba(217, 122, 138, 0.4); }
+.stampSun {
+  background: rgba(255, 194, 90, 0.22);
+  color: #ffc26a;
+  border: 1px solid rgba(255, 194, 90, 0.4);
+}
+.stampMint {
+  background: rgba(60, 160, 120, 0.22);
+  color: #7be0b3;
+  border: 1px solid rgba(60, 160, 120, 0.4);
+}
+.stampPink {
+  background: rgba(217, 122, 138, 0.22);
+  color: #ffacb9;
+  border: 1px solid rgba(217, 122, 138, 0.4);
+}
 
 .celebrationTitle {
   margin: 0 0 12px;
@@ -575,7 +611,11 @@
   opacity: 0.7;
 }
 
-.streakCount { text-transform: none; opacity: 0.85; font-weight: 500; }
+.streakCount {
+  text-transform: none;
+  opacity: 0.85;
+  font-weight: 500;
+}
 
 .streakRow {
   display: flex;
@@ -590,7 +630,9 @@
   gap: 4px;
 }
 
-.streakDayEmpty { opacity: 0.4; }
+.streakDayEmpty {
+  opacity: 0.4;
+}
 
 .streakDayPlaceholder {
   display: inline-block;
@@ -632,5 +674,46 @@
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 16px 28px 14px 28px;
+    overflow: auto;
+  }
+
+  .header {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+  .sideNoteInput {
+    font-size: 11px;
+  }
+  .promptIntro {
+    font-size: 11px;
+  }
+
+  .promptQuestion {
+    font-size: 18px;
+  }
+
+  .writing {
+    min-height: 100px;
+    max-height: 260px;
+    font-size: 15px;
+    line-height: 28px;
+  }
+  .stage {
+    padding: 20px 8px;
+    align-items: flex-start;
   }
 }
