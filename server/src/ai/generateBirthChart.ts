@@ -1,9 +1,10 @@
+import { OPENROUTER_MODEL as MODEL, fetchOpenRouter } from './openrouter';
 import { BIRTH_CHART_INTERPRETATION_PROMPT } from './birthChartPrompt';
 import { calculatePlacements } from './natalCalculator';
 import type { BirthChartRequest, BirthChartResult } from './insightsTypes';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-const MODEL = 'anthropic/claude-3-haiku';
+
 
 function buildInterpretationPrompt(opts: {
   sunSign: string;
@@ -21,7 +22,7 @@ function buildInterpretationPrompt(opts: {
 }
 
 async function getInterpretation(prompt: string): Promise<string> {
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  const response = await fetchOpenRouter('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${OPENROUTER_API_KEY}`,

@@ -10,6 +10,7 @@
 //      block in http.createServer, BEFORE the final fallback res.end.
 
 import 'dotenv/config';
+import { aiErrorMessage } from './ai/openrouter';
 import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { generateAssistantReply } from './ai/generateReply';
@@ -117,7 +118,7 @@ const server = http.createServer((req, res) => {
         });
         res.end(
           JSON.stringify({
-            message: 'Could not generate onboarding profile.',
+            message: aiErrorMessage(error, 'Could not generate onboarding profile.'),
           })
         );
       }
@@ -154,7 +155,7 @@ const server = http.createServer((req, res) => {
         });
         res.end(
           JSON.stringify({
-            message: 'Could not generate daily prompt.',
+            message: aiErrorMessage(error, 'Could not generate daily prompt.'),
           }),
         );
       }
@@ -187,7 +188,7 @@ const server = http.createServer((req, res) => {
       } catch (error) {
         console.error('Test interpretation error:', error);
         res.writeHead(500, { ...corsHeaders, 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Could not interpret test.' }));
+        res.end(JSON.stringify({ message: aiErrorMessage(error, 'Could not interpret test.') }));
       }
     });
     return;
@@ -211,7 +212,7 @@ const server = http.createServer((req, res) => {
       } catch (error) {
         console.error('Personality profile error:', error);
         res.writeHead(500, { ...corsHeaders, 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Could not generate personality profile.' }));
+        res.end(JSON.stringify({ message: aiErrorMessage(error, 'Could not generate personality profile.') }));
       }
     });
     return;
@@ -234,7 +235,7 @@ const server = http.createServer((req, res) => {
       } catch (error) {
         console.error('Birth chart error:', error);
         res.writeHead(500, { ...corsHeaders, 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Could not generate birth chart.' }));
+        res.end(JSON.stringify({ message: aiErrorMessage(error, 'Could not generate birth chart.') }));
       }
     });
     return;
@@ -287,11 +288,11 @@ wss.on('connection', (ws: WebSocket) => {
             },
           });
         } catch (error) {
-          console.error('Gemini generation error:', error);
+          console.error('AI generation error:', error);
           sendTyping(ws, false);
           sendError(
             ws,
-            'The assistant is experiencing high demand right now. Please try again in a moment.'
+            aiErrorMessage(error, 'The assistant could not respond. Please try again shortly.')
           );
         }
       }

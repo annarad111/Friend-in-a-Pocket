@@ -19,6 +19,10 @@ export const useChatSocket = () => {
   } = useChatStore();
 
   const connect = useCallback(() => {
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
+    }
     setSocketStatus('connecting');
 
     createSocketConnection({
@@ -31,6 +35,7 @@ export const useChatSocket = () => {
 
       onClose: () => {
         setSocketStatus('disconnected');
+        setTyping(false);
 
         if (reconnectAttemptsRef.current >= MAX_RECONNECT_ATTEMPTS) {
           setErrorMessage('Connection lost. Please refresh or try again later.');

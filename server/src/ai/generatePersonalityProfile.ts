@@ -1,8 +1,9 @@
+import { OPENROUTER_MODEL as MODEL, fetchOpenRouter } from './openrouter';
 import { PERSONALITY_PROFILE_PROMPT } from './psychTestPrompts';
 import type { PersonalityProfileRequest } from './insightsTypes';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-const MODEL = 'anthropic/claude-3-haiku';
+
 
 
 function buildUserPrompt(input: PersonalityProfileRequest): string {
@@ -38,7 +39,7 @@ export async function generatePersonalityProfile(
 ): Promise<{ content: string; reflectionQuestion: string }> {
   const userPrompt = buildUserPrompt(input);
 
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  const response = await fetchOpenRouter('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${OPENROUTER_API_KEY}`,

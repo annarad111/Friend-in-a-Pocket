@@ -2,8 +2,7 @@ import type { CompletedTest, PersonalityProfile, BirthData, BirthChart } from "@
 import type { JournalEntry } from "@/types/journal";
 import type { StoredOnboardingProfile } from "@/types/onboarding";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
+import { API_BASE_URL } from './backend';
 
 type TestResponse = { questionId: string; question: string; answer: string };
 
@@ -11,7 +10,7 @@ export async function interpretTest(
   testType: string,
   responses: TestResponse[],
 ): Promise<{ interpretation: string }> {
-  const res = await fetch(`${API_BASE}/api/interpret-test`, {
+  const res = await fetch(`${API_BASE_URL}/api/interpret-test`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ testType, responses }),
@@ -40,7 +39,7 @@ export async function fetchPersonalityProfile(
     interpretation: t.interpretation,
   }));
 
-  const res = await fetch(`${API_BASE}/api/personality-profile`, {
+  const res = await fetch(`${API_BASE_URL}/api/personality-profile`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -63,7 +62,7 @@ export async function fetchPersonalityProfile(
 export async function generateBirthChartApi(
   data: BirthData,
 ): Promise<Omit<BirthChart, "generatedAt">> {
-  const res = await fetch(`${API_BASE}/api/birth-chart`, {
+  const res = await fetch(`${API_BASE_URL}/api/birth-chart`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
