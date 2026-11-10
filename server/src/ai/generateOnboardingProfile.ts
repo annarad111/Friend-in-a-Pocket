@@ -1,3 +1,4 @@
+import { OPENROUTER_MODEL as MODEL, fetchOpenRouter } from './openrouter';
 import { ONBOARDING_PROFILE_PROMPT } from "./onboardingPrompt";
 import { fixJsonControlChars } from "./fixJson";
 import {
@@ -7,7 +8,7 @@ import {
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const MODEL = "anthropic/claude-3-haiku";
+
 
 function extractJson(text: string) {
   const start = text.indexOf("{");
@@ -30,7 +31,7 @@ Favorite color: ${input.favoriteColor}
 Favorite musical instrument: ${input.favoriteInstrument}
 `;
 
-  const response = await fetch(
+  const response = await fetchOpenRouter(
     "https://openrouter.ai/api/v1/chat/completions",
     {
       method: "POST",

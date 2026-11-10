@@ -1,10 +1,11 @@
+import { OPENROUTER_MODEL as MODEL, fetchOpenRouter } from './openrouter';
 import {
   DESERT_CUBE_INTERPRETATION_PROMPT,
 } from './psychTestPrompts';
 import type { InterpretTestRequest, TestResponse } from './insightsTypes';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-const MODEL = 'anthropic/claude-3-haiku';
+
 
 function buildUserPrompt(responses: TestResponse[]): string {
   return responses
@@ -23,7 +24,7 @@ export async function interpretPsychTest(
   const systemPrompt = getSystemPrompt(input.testType);
   const userPrompt = buildUserPrompt(input.responses);
 
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  const response = await fetchOpenRouter('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${OPENROUTER_API_KEY}`,

@@ -1,7 +1,6 @@
 import { GeneratedOnboardingProfile, UserOnboardingProfile } from '@/types/onboarding';
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'https://friend-in-a-pocket.onrender.com';
+import { API_BASE_URL } from './backend';
 
 export async function generateOnboardingProfile(
   profile: UserOnboardingProfile

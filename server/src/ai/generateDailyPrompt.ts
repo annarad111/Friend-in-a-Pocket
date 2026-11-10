@@ -1,3 +1,4 @@
+import { OPENROUTER_MODEL as MODEL, fetchOpenRouter } from './openrouter';
 // → server/src/ai/generateDailyPrompt.ts
 //
 // Calls OpenRouter (Claude Haiku) with the daily-prompt system message and
@@ -13,7 +14,7 @@ import type {
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const MODEL = 'anthropic/claude-3-haiku';
+
 
 function extractJson(text: string) {
   const start = text.indexOf('{');
@@ -65,7 +66,7 @@ export async function generateDailyPrompt(
 ): Promise<GeneratedDailyPrompt> {
   const userPrompt = buildUserPrompt(input);
 
-  const response = await fetch(
+  const response = await fetchOpenRouter(
     'https://openrouter.ai/api/v1/chat/completions',
     {
       method: 'POST',

@@ -1,7 +1,6 @@
 import type { DailyPrompt } from '@/types/journal';
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'https://friend-in-a-pocket.onrender.com';
+import { API_BASE_URL } from './backend';
 
 export function todayKey(date = new Date()): string {
   const y = date.getFullYear();

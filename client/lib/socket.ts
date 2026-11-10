@@ -1,3 +1,4 @@
+import { WS_URL } from './backend';
 import { ClientEvent, ServerEvent } from '@/types/chat';
 
 let socket: WebSocket | null = null;
@@ -15,7 +16,7 @@ export const createSocketConnection = ({
   onError,
   onMessage,
 }: SocketHandlers) => {
-  const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080';
+  closeSocketConnection();
   socket = new WebSocket(WS_URL);
 
   socket.onopen = () => {
@@ -54,6 +55,11 @@ export const isSocketOpen = () => {
 
 export const closeSocketConnection = () => {
   if (socket) {
+    // Intentional cleanup must not schedule a reconnect for the old socket.
+    socket.onopen = null;
+    socket.onclose = null;
+    socket.onerror = null;
+    socket.onmessage = null;
     socket.close();
     socket = null;
   }
